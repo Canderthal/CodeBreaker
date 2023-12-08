@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <title>CodeBreaker</title>
+</head>
+<body onload="TEST()">
+
+
+
+<div class="container mt-5">
+
+    <h4>Testing Code: <span id="SecretCode"></span></h4>
+    <div class="row ">
+        <div class="col-md-6 mainWindow">
+            <div class="row titleBar ">
+                <div class="col-10 d-flex align-items-center">
+                    <p>Code Breaker</p>
+                </div>
+                <div class="col-1">
+                    <button id="resetButton">Reset</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p>Target: 456.19.4986:03</p>
+                </div>
+                <div class="col-3">
+                    <p>Server Password:</p>
+                </div>
+                <div class="col-1 passcode d-flex justify-content-center" id="code0">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code1">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code2">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code3">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code4">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code5">
+                    <p>#</p>
+                </div>
+                <div class="col-1 passcode" id="code6">
+                    <p>#</p>
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-3">
+                    <button type="button" id="attemptHack" onclick="testSubmission()">Attempt Hack</button>
+                </div>
+                <div class="col d-flex justify-content-end p-0">
+                    <select  id="input0">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select  id="input1">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+
+                    <select  id="input2">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select  id="input3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select  id="input4">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select  id="input5">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select  id="input6">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>Rejected Passwords:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <p>3</p>
+                </div>
+                <div class="col-1">
+                    <p>4</p>
+                </div>
+                <div class="col-1">
+                    <p>6</p>
+                </div>
+                <div class="col-1">
+                    <p>7</p>
+                </div>
+                <div class="col-1">
+                    <p>8</p>
+                </div>
+                <div class="col-1">
+                    <p>10</p>
+                </div>
+                <div class="col-1">
+                    <p>10</p>
+                </div>
+                <div class="col">
+                    <p>30% of this password is correct.</p> <!-- Lay out text-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+                <div class="col-1">
+                    <p>#</p>
+                </div>
+            </div>
+
+
+
+            <!-- OLD STUFF-->
+            <!--Hints will be stored here-->
+            <div class="row mt-3">
+                <div class="col hintCard" onclick="hintPicked('hint0')">
+                    <p class="hint" id="hint0">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="col hintCard" onclick="hintPicked('hint1')">
+                    <p class="hint" id="hint1">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="col hintCard" onclick="hintPicked('hint2')">
+                    <p class="hint" id="hint2">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col hintCard" onclick="hintPicked('hint3')">
+                    <p class="hint" id="hint3">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col hintCard" onclick="hintPicked('hint4')">
+                    <p class="hint" id="hint4">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="col hintCard" onclick="hintPicked('hint5')">
+                    <p class="hint" id="hint5">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+            </div>
+
+            </div>
+
+
+
+        <!-- Hint Container -->
+
+            <div class="col-sm-6">
+                <!--Previously Given Hint Container-->
+                <div class="container previousHintContainer">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center" >
+                            <p>Hints used: 0 Time elapsed: 8:00</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col previousHints">
+                            <h3>Previous Hints</h3>
+                            <ul id="hintContainer">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>

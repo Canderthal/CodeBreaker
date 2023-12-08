@@ -1,0 +1,161 @@
+:root {
+    --black: rgba(0, 0, 0, 0.384);
+    --green: rgb(0, 255, 13);
+}
+
+body {
+    background:  rgba(0, 0, 0, 0.89);
+    color: var(--green);
+}
+h1 {
+    text-align: center;
+    margin-top: 25vh;
+}
+
+.titleBar {
+    background-color: var(--green);
+    border: 1px solid var(--green);
+    color: black;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+}
+
+.titleBar p {
+    text-align: center;
+    margin: 0
+}
+
+.mainWindow {
+    border: 1px solid var(--green);
+    background-color: var(--black);
+    border-radius: 3px 3px 0 0;
+}
+
+
+
+
+
+
+
+
+button {
+    border-radius: 15px;
+
+}
+button:hover {
+    box-shadow: 0 0 5px 2px var(--green);
+}
+
+#attemptHack {
+    border: 3px solid var(--green);
+    background-color: var(--black);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: auto;
+    color: var(--green);
+}
+#resetButton {
+    background-color: rgb(39, 39, 39);
+    color: var(--green);
+    font-weight: 800;
+    padding: 4px 15px;
+
+}
+
+
+.passcode {
+    border: 1px solid var(--green);
+    max-width: fit-content;
+    max-height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.passcode p {
+    align-items: center;
+    margin: 0;
+}
+
+/*
+.passcode {
+
+    border: 3px solid var(--green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--green);
+    background-color: var(--black);
+    max-width: 15px;
+}
+*/
+h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hintCard {
+    border: 3px solid var(--green);
+    border-radius: 10px;
+    margin: 5px;
+    color: var(--green);
+    background-color: var(--black);
+}
+
+.userInput {
+    width: max-content;
+    
+}
+.userInput p {
+    height: 40px;
+    width: 40px;
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bolder;
+    color: var(--green);
+    background-color: var(--green);
+
+}
+
+.previousHints {
+    border: 3px solid var(--green);
+    border-radius: 10px;
+    margin-left: 10px;
+    color: var(--green);
+    background-color: var(--black);
+    min-height: 300px;
+}
+
+
+
+select {
+    border: 1px solid var(--green);
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--black);
+    color: var(--green);
+    border-radius: 4px;
+}
+
+
+.section1 {
+    border: 2px solid var(--green);
+}
+.section1Title {
+    background-color: var(--black);
+    color: var(--green);
+    border: 2px solid var(--green);
+
+}
