@@ -1,5 +1,43 @@
 let secretCode = [];
 let hintContainer = document.getElementById("hintContainer");
+let attemptedPassword = [];
+let rowPos = 1;
+let row = 1;
+let accessGranted = false;
+
+
+
+function openModal() {
+    // Show the modal
+    var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    myModal.show();
+}
+
+
+function nextTarget() {
+    generateRandomCode();
+    clearRejectedPasswords();
+    resetHints();
+    newGameHints();
+}
+
+function resetGame() {
+    generateRandomCode();
+    clearRejectedPasswords();
+    resetHints();
+    newGameHints();
+    clearHints();
+
+}
+
+function clearHints() {
+    var myList = document.getElementById("hintContainer");
+
+// Remove all <li> elements from the list
+    while (myList.firstChild) {
+        myList.removeChild(myList.firstChild);
+    }
+}
 
 
 
@@ -21,14 +59,29 @@ function generateRandomCode() {
 }
 
 function hintPicked(id) {
+    //Get the html element with the specified ID
     let hint = document.getElementById(id);
+    // Get the text content of the HTML element and remove leading/trailing whitespaces
     hint = hint.textContent.trim();
+    // Check if there is a corresponding function for the hint in the 'hintsAndFunctions' object
     if(hintsAndFunctions[hint]) {
+        // If a function is found, call it
         hintsAndFunctions[hint]();
+        if (Object.keys(restartHints).length < 1) {
+            document.getElementById(id).textContent = "No More Hints";
+        } else {
+            let newHint = getRandomHintKey();
+            document.getElementById(id).textContent = newHint;
+            delete restartHints[newHint];
+        }
+
+
     } else {
+        // If no function is found, log a message to the console
         console.log("No function found for the hint")
+        document.getElementById(id).textContent = "no remaining hints";
     }
-    hintsAndFunctions[hint];
+
 }
 
 
@@ -60,44 +113,99 @@ const hintsAndFunctions = {
     //Hint 10
     "Sum of the fifth and last number": sumPos4Pos6,
     //"The third digit is an odd number.": hintThirdDigitIsOdd,
-  };
+};
 
 
+let restartHints = {
+    //Hint 1
+    "The total sum of all digits is even or odd": hintSumIsEvenOrOdd,
+    //Hint 2
+    "The total sum is...": totalSum,
+    //Hint 3
+    "The middle digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
+    //Hint 4
+    "Total Sum of the 4 left most tiles": leftTotalSum,
+    //Hint 5
+    "Total Sum of the 4 right most tiles": rightTotalSum,
+    //Hint 6
+    "Total number of even numbers": totalEvenNum,
+    //Hint 7
+    "Total number of odd numbers": totalOddNum,
+    //Hint 8
+    "Sum of first and third number": sumPos0Pos2,
+    //Hint 9
+    "Sum of the third and fifth number": sumPos2Pos4,
+    //Hint 10
+    "Sum of the fifth and last number": sumPos4Pos6,
+    //"The third digit is an odd number.": hintThirdDigitIsOdd,
+};
+
+
+function resetHints() {
+    restartHints = {
+            //Hint 1
+    "The total sum of all digits is even or odd": hintSumIsEvenOrOdd,
+    //Hint 2
+    "The total sum is...": totalSum,
+    //Hint 3
+    "The middle digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
+    //Hint 4
+    "Total Sum of the 4 left most tiles": leftTotalSum,
+    //Hint 5
+    "Total Sum of the 4 right most tiles": rightTotalSum,
+    //Hint 6
+    "Total number of even numbers": totalEvenNum,
+    //Hint 7
+    "Total number of odd numbers": totalOddNum,
+    //Hint 8
+    "Sum of first and third number": sumPos0Pos2,
+    //Hint 9
+    "Sum of the third and fifth number": sumPos2Pos4,
+    //Hint 10
+    "Sum of the fifth and last number": sumPos4Pos6,
+    //"The third digit is an odd number.": hintThirdDigitIsOdd,
+    }
+}
 
 
 //Fills the board with 6 new hints
 function newGameHints() {
     for (let i = 0; i < 6; i++) {
         let hint = document.getElementById("hint" + i);
+        let hintText = getRandomHintKey();
         hint.textContent = getRandomHintKey();
+        hint.textContent = hintText;
+        delete restartHints[hintText];
+
     }
-    //generateRandomCode();
+
 }
 
 
 function getRandomHintKey() {
-    const hintKeys = Object.keys(hintsAndFunctions);
+    const hintKeys = Object.keys(restartHints); //changed from hintsAndFunctions
     const randomIndex = Math.floor(Math.random() * hintKeys.length);
     return hintKeys[randomIndex];
-  }
+}
+
+
 
 function testSubmission() {
     let total = 0;
-
+    attemptedPassword = [];
     // Check each input against secretCode
     for (let i = 0; i < 7; i++) {
         let x = document.getElementById("input" + i);
         let xVal = parseInt(x.value);
+        attemptedPassword.push(xVal);
         if (xVal === secretCode[i]) {
-            console.log("correct");
+
             total += 1;
-        } else {
-            console.log("incorrect");
-        }
+            if (total === 7) {
+                accessGranted = true;
+            }
+        } 
     }
-
-
-
 
     // Secondary Function to change the color of boxes after a delay
     function changeColorWithDelay(index) {
@@ -118,23 +226,48 @@ function testSubmission() {
             if (index < 6) {
                 changeColorWithDelay(index + 1);
             }
-        }, 1000);
+        }, 300);
+
     }
 
     // Start the color change with a delay for the first box
     changeColorWithDelay(0);
     resetColor(total);
-
 }
+function updateRejectedPasswords() {
+    for (let i = 0; i < 7; i++, rowPos++) {
+        const reject = document.getElementById("rejected" + row + rowPos);
+        reject.textContent = attemptedPassword[i];
+    }
+    row++;
+}
+
+function clearRejectedPasswords() {
+    for (let row = 1; row <= 3; row++) {
+        for (let rowPos = 1; rowPos <= 7; rowPos++) {
+            const reject = document.getElementById("rejected" + row + rowPos);
+            reject.textContent = "#";
+        }
+        rowPos = 1;
+    }
+}
+
+
+
 
 function resetColor(total) {
     setTimeout(function() {
         for (let i = 0; i < 7; i++) {
             let codePos = document.getElementById("code" + i);
-            codePos.style.backgroundColor = "white";
+            codePos.style.backgroundColor = "black";
+        }
+        if (accessGranted) {
+            openModal();
         }
         updateTotalCorrect(total);
-    }, 8000);
+        updateRejectedPasswords();
+        rowPos = 1;
+    }, 3000);
 }
 
 function updateTotalCorrect(total) {
