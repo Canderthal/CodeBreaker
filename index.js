@@ -4,6 +4,10 @@ let attemptedPassword = [];
 let rowPos = 1;
 let row = 1;
 let accessGranted = false;
+let hackAttempts = 0;
+let hintsUsed = 0;
+let score = 0;
+const scoreId = document.getElementById("score");
 
 
 
@@ -15,10 +19,23 @@ function openModal() {
 
 
 function nextTarget() {
-    generateRandomCode();
-    clearRejectedPasswords();
-    resetHints();
-    newGameHints();
+    let buttonText = document.getElementById("gameButton");
+    if (buttonText.textContent === "Reset"){
+        resetGame();
+    } else {
+        let popUp = document.getElementById("gameButton");
+        popUp.textContent = "Next Target"
+        generateRandomCode();
+        clearRejectedPasswords();
+        resetHints();
+        clearHints();
+        newGameHints();
+        accessGranted = false;
+        score++;
+        scoreId.textContent = score;
+        hintsUsed = 0;
+        hackAttempts = 0;
+    }
 }
 
 function resetGame() {
@@ -27,6 +44,11 @@ function resetGame() {
     resetHints();
     newGameHints();
     clearHints();
+    accessGranted = false;
+    score = 0;
+    scoreId.textContent = score;
+    hintsUsed = 0;
+    hackAttempts = 0;
 
 }
 
@@ -73,6 +95,8 @@ function hintPicked(id) {
             let newHint = getRandomHintKey();
             document.getElementById(id).textContent = newHint;
             delete restartHints[newHint];
+            hintsUsed += 1;
+
         }
 
 
@@ -193,6 +217,7 @@ function getRandomHintKey() {
 function testSubmission() {
     let total = 0;
     attemptedPassword = [];
+    hackAttempts++;
     // Check each input against secretCode
     for (let i = 0; i < 7; i++) {
         let x = document.getElementById("input" + i);
@@ -203,6 +228,11 @@ function testSubmission() {
             total += 1;
             if (total === 7) {
                 accessGranted = true;
+                let popUp = document.getElementById("gameButton");
+                let granted = document.getElementById("granted");
+                granted.textContent = "ACCESS GRANTED";
+                granted.style.color = "green";
+                popUp.textContent = "Reset";
             }
         } 
     }
@@ -243,6 +273,8 @@ function updateRejectedPasswords() {
 }
 
 function clearRejectedPasswords() {
+    row = 1;
+    rowPos = 1;
     for (let row = 1; row <= 3; row++) {
         for (let rowPos = 1; rowPos <= 7; rowPos++) {
             const reject = document.getElementById("rejected" + row + rowPos);
@@ -262,11 +294,25 @@ function resetColor(total) {
             codePos.style.backgroundColor = "black";
         }
         if (accessGranted) {
+            let popUp = document.getElementById("gameButton");
+            popUp.textContent = "Next Target";
             openModal();
         }
         updateTotalCorrect(total);
-        updateRejectedPasswords();
-        rowPos = 1;
+        if (!accessGranted){
+            if (hackAttempts > 2) {
+                let popUp = document.getElementById("gameButton");
+                let granted = document.getElementById("granted");
+                granted.textContent = "ACCESS DENIED";
+                granted.style.color = "red";
+                popUp.textContent = "Reset";
+                openModal();
+            } else {
+                updateRejectedPasswords();
+                rowPos = 1;
+            }
+
+        }
     }, 3000);
 }
 
@@ -278,6 +324,15 @@ function updateTotalCorrect(total) {
 }
 
 
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Hint Functions
 //Hint 1
 function hintSumIsEvenOrOdd() {

@@ -12,13 +12,15 @@
 
 
 <div class="container mt-5">
-    <button onclick="nextTarget()">DEBUG</button>
     <h4>Testing Code: <span id="SecretCode"></span></h4>
     <div class="row ">
         <div class="col-sm-12 col-md-6 mainWindow">
             <div class="row titleBar ">
-                <div class="col-10 d-flex align-items-center">
+                <div class="col-7 d-flex align-items-center">
                     <p>Code Breaker</p>
+                </div>
+                <div class="col">
+                    <p>Score: <span id="score">0</span></p>
                 </div>
                 <div class="col d-flex justify-content-end">
                     <button id="resetButton" onclick="resetGame()">Reset</button>
@@ -285,7 +287,7 @@
                 <div class="container previousHintContainer">
                     <div class="row">
                         <div class="col d-flex justify-content-center" >
-                            <p>Hints used: 0 Time elapsed: 8:00</p>
+                            <p><!--Hints used: 0 Time elapsed: 8:00     ,  Undecided to add or not--></p>
                         </div>
                     </div>
                     <div class="row">
@@ -301,6 +303,7 @@
 
     </div>
 </div>
+<h3><a href="https://docs.google.com/forms/d/e/1FAIpQLSfPjb9hv1pGmj4bXbfe29gjwGN64zpdI5buaV7gglCIjPYsEw/viewform?usp=sf_link" target="_blank">Feedback</a></h3>
 
 
 <!-- Button trigger modal -->
@@ -311,11 +314,11 @@
     <div class="modal-dialog">
       <div class="modal-content testBG" id="testBG" style="background-color: black; border: 1px solid gray;"> <!--Added Inline stlye. Wasnt able to overwrite bootstrap colors-->
         <div class="modal-body testBG"  >
-          <h4>Access Granted</h4>
+          <h4 id="granted">Access Granted</h4>
         </div>
         <div class="modal-footer testBG" style="border: none;">
           <button type="button" data-bs-dismiss="modal">Quit</button>
-          <button type="button" data-bs-dismiss="modal" onclick="nextTarget()">Next Target</button>
+          <button type="button" data-bs-dismiss="modal" onclick="nextTarget()" id="gameButton">Next Target</button>
         </div>
     </div>
   </div>
