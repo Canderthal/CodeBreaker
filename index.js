@@ -76,8 +76,8 @@ function generateRandomCode() {
     console.log("SecretCode is " + secretCode);
 
     // delete after tests
-    let x = document.getElementById("SecretCode");
-    x.textContent = secretCode;
+    //let x = document.getElementById("SecretCode");
+    //x.textContent = secretCode;
 }
 
 function hintPicked(id) {
