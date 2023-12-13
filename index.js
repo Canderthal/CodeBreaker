@@ -10,21 +10,8 @@ let score = 0;
 const scoreId = document.getElementById("score");
 
 
-function openHowToPlay() {
-    var myModal = new bootstrap.Modal(document.getElementById('roadMap'));
-    myModal.show();
-}
 
-function openRoadmap() {
-    var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
-    myModal.show();
-}
 
-function openModal() {
-    // Show the modal
-    var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-    myModal.show();
-}
 
 //Called after hack is successful 
 function nextTarget() {
@@ -412,13 +399,6 @@ function updateTotalCorrect(total) {
 
 
 
-
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Hint Functions
 //Hint 1
@@ -617,4 +597,27 @@ function diffPos4Pos6() {
     let difference = secretCode[6] - secretCode[4];
     text.textContent = "The difference between the seventh and fifth number is " + difference;
     hintContainer.appendChild(text);
+}
+
+
+
+
+
+
+
+
+
+
+//Opens Modals
+function openHowToPlay() {
+    var myModal = new bootstrap.Modal(document.getElementById('roadMap'));
+    myModal.show();
+}
+function openRoadmap() {
+    var myModal = new bootstrap.Modal(document.getElementById('howToModal'));
+    myModal.show();
+}
+function openModal() {
+    var myModal = new bootstrap.Modal(document.getElementById('accessModal'));
+    myModal.show();
 }
