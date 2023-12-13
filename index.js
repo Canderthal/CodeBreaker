@@ -610,11 +610,11 @@ function diffPos4Pos6() {
 
 //Opens Modals
 function openHowToPlay() {
-    var myModal = new bootstrap.Modal(document.getElementById('roadMap'));
+    var myModal = new bootstrap.Modal(document.getElementById('howToModal'));
     myModal.show();
 }
 function openRoadmap() {
-    var myModal = new bootstrap.Modal(document.getElementById('howToModal'));
+    var myModal = new bootstrap.Modal(document.getElementById('roadMap'));
     myModal.show();
 }
 function openModal() {
