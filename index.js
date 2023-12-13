@@ -5,11 +5,20 @@ let rowPos = 1;
 let row = 1;
 let accessGranted = false;
 let hackAttempts = 0;
-let hintsUsed = 0;
+let hintsUsed = 0; // Havent added a tracker but may add one in the future
 let score = 0;
 const scoreId = document.getElementById("score");
 
 
+function openHowToPlay() {
+    var myModal = new bootstrap.Modal(document.getElementById('roadMap'));
+    myModal.show();
+}
+
+function openRoadmap() {
+    var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+    myModal.show();
+}
 
 function openModal() {
     // Show the modal
@@ -17,7 +26,7 @@ function openModal() {
     myModal.show();
 }
 
-
+//Called after hack is successful 
 function nextTarget() {
     let buttonText = document.getElementById("gameButton");
     if (buttonText.textContent === "Reset"){
@@ -33,11 +42,14 @@ function nextTarget() {
         accessGranted = false;
         score++;
         scoreId.textContent = score;
-        hintsUsed = 0;
+        hintsUsed = 0; // Not currently in use
         hackAttempts = 0;
+        clearSelectedNum();
     }
 }
 
+
+//Resets game after failure
 function resetGame() {
     generateRandomCode();
     clearRejectedPasswords();
@@ -52,6 +64,8 @@ function resetGame() {
 
 }
 
+
+//Clears hints for next game
 function clearHints() {
     var myList = document.getElementById("hintContainer");
 
@@ -62,9 +76,9 @@ function clearHints() {
 }
 
 
-
+//Generate the secret phrase 
 function generateRandomCode() {
-    secretCode = [];
+    secretCode = []; // removed numbers 10-12
     let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     for (let i = 0; i< 7; i++) {
         let randomIndex = Math.floor(Math.random() * numbers.length);
@@ -75,12 +89,10 @@ function generateRandomCode() {
     secretCode.sort(function(a, b){return a - b});
     console.log("SecretCode is " + secretCode);
 
-    // delete after tests
-    //let x = document.getElementById("SecretCode");
-    //x.textContent = secretCode;
 }
 
 function hintPicked(id) {
+    console.log(Object.keys(restartHints).length);
     //Get the html element with the specified ID
     let hint = document.getElementById(id);
     // Get the text content of the HTML element and remove leading/trailing whitespaces
@@ -103,25 +115,29 @@ function hintPicked(id) {
     } else {
         // If no function is found, log a message to the console
         console.log("No function found for the hint")
-        document.getElementById(id).textContent = "no remaining hints";
+        document.getElementById(id).textContent = "No More Hints";
     }
 
 }
 
 
-function TEST() {
+
+
+function startGame() {
     newGameHints();
     generateRandomCode();
 
 }
 
+
+//Controls the functions needed for each hint
 const hintsAndFunctions = {
     //Hint 1
     "The total sum of all digits is even or odd": hintSumIsEvenOrOdd,
     //Hint 2
     "The total sum is...": totalSum,
     //Hint 3
-    "The middle digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
+    "The fourth digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
     //Hint 4
     "Total Sum of the 4 left most tiles": leftTotalSum,
     //Hint 5
@@ -133,20 +149,35 @@ const hintsAndFunctions = {
     //Hint 8
     "Sum of first and third number": sumPos0Pos2,
     //Hint 9
-    "Sum of the third and fifth number": sumPos2Pos4,
+    "The sum of the first and the third numbers are": sumPos1Pos3,
     //Hint 10
+    "Sum of the third and fifth number": sumPos2Pos4,
+    //Hint 11
+    "The sum of the fourth and sixth numbers are": sumPos3Pos5,
+    //Hint 12
     "Sum of the fifth and last number": sumPos4Pos6,
-    //"The third digit is an odd number.": hintThirdDigitIsOdd,
+    //Hint 13
+    "The difference between the highest and lowest number is...": diffHighesAndLowest,
+    //Hint 14
+    "The difference between the third and first number is": diffPos0Pos2,
+    //Hint 15
+    "The difference between the fourth and second number is": diffPos1Pos3,
+    //Hint 16
+    "The difference between the fifth and third number is": diffPos2Pos4,
+    //Hint 17
+    "The difference between the sixth and fourth number is": diffPos3Pos5,
+    //Hint 18
+    "The difference between the seventh and fifth number is": diffPos4Pos6,
 };
 
-
+//Hints are removed from this dictionary as they get picked
 let restartHints = {
     //Hint 1
     "The total sum of all digits is even or odd": hintSumIsEvenOrOdd,
     //Hint 2
     "The total sum is...": totalSum,
     //Hint 3
-    "The middle digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
+    "The fourth digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
     //Hint 4
     "Total Sum of the 4 left most tiles": leftTotalSum,
     //Hint 5
@@ -158,21 +189,39 @@ let restartHints = {
     //Hint 8
     "Sum of first and third number": sumPos0Pos2,
     //Hint 9
-    "Sum of the third and fifth number": sumPos2Pos4,
+    "The sum of the first and the third numbers are": sumPos1Pos3,
     //Hint 10
+    "Sum of the third and fifth number": sumPos2Pos4,
+    //Hint 11
+    "The sum of the fourth and sixth numbers are": sumPos3Pos5,
+    //Hint 12
     "Sum of the fifth and last number": sumPos4Pos6,
-    //"The third digit is an odd number.": hintThirdDigitIsOdd,
+    //Hint 13
+    "The difference between the highest and lowest number is...": diffHighesAndLowest,
+    //Hint 14
+    "The difference between the third and first number is": diffPos0Pos2,
+    //Hint 15
+    "The difference between the fourth and second number is": diffPos1Pos3,
+    //Hint 16
+    "The difference between the fifth and third number is": diffPos2Pos4,
+    //Hint 17
+    "The difference between the sixth and fourth number is": diffPos3Pos5,
+    //Hint 18
+    "The difference between the seventh and fifth number is": diffPos4Pos6,
 };
 
 
+
+
+//Resets the hint pool
 function resetHints() {
     restartHints = {
-            //Hint 1
+    //Hint 1
     "The total sum of all digits is even or odd": hintSumIsEvenOrOdd,
     //Hint 2
     "The total sum is...": totalSum,
     //Hint 3
-    "The middle digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
+    "The fourth digit is greater or less than 5.": hintMiddleDigitGreaterThan5,
     //Hint 4
     "Total Sum of the 4 left most tiles": leftTotalSum,
     //Hint 5
@@ -184,10 +233,25 @@ function resetHints() {
     //Hint 8
     "Sum of first and third number": sumPos0Pos2,
     //Hint 9
-    "Sum of the third and fifth number": sumPos2Pos4,
+    "The sum of the first and the third numbers are": sumPos1Pos3,
     //Hint 10
+    "Sum of the third and fifth number": sumPos2Pos4,
+    //Hint 11
+    "The sum of the fourth and sixth numbers are": sumPos3Pos5,
+    //Hint 12
     "Sum of the fifth and last number": sumPos4Pos6,
-    //"The third digit is an odd number.": hintThirdDigitIsOdd,
+    //Hint 13
+    "The difference between the highest and lowest number is...": diffHighesAndLowest,
+    //Hint 14
+    "The difference between the third and first number is": diffPos0Pos2,
+    //Hint 15
+    "The difference between the fourth and second number is": diffPos1Pos3,
+    //Hint 16
+    "The difference between the fifth and third number is": diffPos2Pos4,
+    //Hint 17
+    "The difference between the sixth and fourth number is": diffPos3Pos5,
+    //Hint 18
+    "The difference between the seventh and fifth number is": diffPos4Pos6,
     }
 }
 
@@ -206,6 +270,8 @@ function newGameHints() {
 }
 
 
+
+//Selects random hint to replace hints that are picked
 function getRandomHintKey() {
     const hintKeys = Object.keys(restartHints); //changed from hintsAndFunctions
     const randomIndex = Math.floor(Math.random() * hintKeys.length);
@@ -214,6 +280,16 @@ function getRandomHintKey() {
 
 
 
+//Resets number selects for each new round
+function clearSelectedNum() {
+    for (let i = 0; i < 7; i++) {
+        let x = document.getElementById("input" + i);
+        x.value = "0";
+    }
+}
+
+
+//Called from the button, "attempt hack". Test if the attempted code is correct
 function testSubmission() {
     let total = 0;
     attemptedPassword = [];
@@ -230,6 +306,8 @@ function testSubmission() {
                 accessGranted = true;
                 let popUp = document.getElementById("gameButton");
                 let granted = document.getElementById("granted");
+                let codeCard = document.getElementById("secretCodeCard");
+                codeCard.textContent = "";
                 granted.textContent = "ACCESS GRANTED";
                 granted.style.color = "green";
                 popUp.textContent = "Reset";
@@ -264,6 +342,9 @@ function testSubmission() {
     changeColorWithDelay(0);
     resetColor(total);
 }
+
+
+//Adds rejected password to the list
 function updateRejectedPasswords() {
     for (let i = 0; i < 7; i++, rowPos++) {
         const reject = document.getElementById("rejected" + row + rowPos);
@@ -272,6 +353,8 @@ function updateRejectedPasswords() {
     row++;
 }
 
+
+//clears rejected passwords
 function clearRejectedPasswords() {
     row = 1;
     rowPos = 1;
@@ -286,7 +369,7 @@ function clearRejectedPasswords() {
 
 
 
-
+//Resets color back to the normal background
 function resetColor(total) {
     setTimeout(function() {
         for (let i = 0; i < 7; i++) {
@@ -304,6 +387,8 @@ function resetColor(total) {
                 let popUp = document.getElementById("gameButton");
                 let granted = document.getElementById("granted");
                 granted.textContent = "ACCESS DENIED";
+                let codeCard = document.getElementById("secretCodeCard");
+                codeCard.textContent = "The secret code was: " + secretCode;
                 granted.style.color = "red";
                 popUp.textContent = "Reset";
                 openModal();
@@ -316,6 +401,8 @@ function resetColor(total) {
     }, 3000);
 }
 
+
+//Updates the hint container to tell the player how many are in the correct position.
 function updateTotalCorrect(total) {
     let text = document.createElement("li");
     text.textContent = "You had " + total + " numbers in the correct position";
@@ -361,7 +448,7 @@ function totalSum() {
         total += secretCode[i];
     }
     console.log(total);
-    text.textContent = "The toal sum is " + total;
+    text.textContent = "The total sum is " + total;
     hintContainer.appendChild(text);
 }
 
@@ -411,7 +498,7 @@ function rightTotalSum() {
         total += secretCode[i];
     }
     console.log("Hint 5 right total sum: " + total);
-    text.textContent = "The right total sum is: " + total;
+    text.textContent = "The right total sum is " + total;
     hintContainer.appendChild(text);
   }
 
@@ -437,15 +524,22 @@ function totalOddNum() {
 //Hint 8
 function sumPos0Pos2() {
     let text = document.createElement("li");
+    let difference = secretCode[2] - secretCode[0];
+    text.textContent = "The sum of the first and the third numbers are " + difference;
+    hintContainer.appendChild(text);
+}
+//Hint 9 
+function sumPos1Pos3() {
+    let text = document.createElement("li");
     console.log("Hint 8");
     let total = 0;
     total += secretCode[0];
-    total += secretCode[2];
+    total += secretCode[3];
     text.textContent = "The sum of the first and the third numbers are " + total;
     hintContainer.appendChild(text);
 }
 
-//Hint 9
+//Hint 10
 function sumPos2Pos4() {
     let text = document.createElement("li");
     console.log("Hint 9");
@@ -456,7 +550,18 @@ function sumPos2Pos4() {
     hintContainer.appendChild(text);
 }
 
-//Hint 9
+//Hint 11
+function sumPos3Pos5() {
+    let text = document.createElement("li");
+    console.log("Hint 9");
+    let total = 0;
+    total += secretCode[3];
+    total += secretCode[5];
+    text.textContent = "The sum of the fourth and sixth numbers are " + total;
+    hintContainer.appendChild(text);
+}
+
+//Hint 12
 function sumPos4Pos6() {
     let text = document.createElement("li");
     console.log("Hint 10");
@@ -464,5 +569,52 @@ function sumPos4Pos6() {
     total += secretCode[4];
     total += secretCode[6];
     text.textContent = "The sum of the fifth and last numbers are " + total;
+    hintContainer.appendChild(text);
+}
+//Hint 13
+function diffHighesAndLowest() {
+    let text = document.createElement("li");
+    let difference = secretCode[6] - secretCode[0];
+    text.textContent = "The difference between the highest and lowest number is " + difference;
+    hintContainer.appendChild(text);
+}
+
+//Hint 14
+function diffPos0Pos2() {
+    let text = document.createElement("li");
+    let difference = secretCode[2] - secretCode[0];
+    text.textContent = "The difference between the third and first number is " + difference;
+    hintContainer.appendChild(text);
+}
+
+//Hint 15
+function diffPos1Pos3() {
+    let text = document.createElement("li");
+    let difference = secretCode[3] - secretCode[1];
+    text.textContent = "The difference between the fourth and second number is " + difference;
+    hintContainer.appendChild(text);
+}
+
+//Hint 16
+function diffPos2Pos4() {
+    let text = document.createElement("li");
+    let difference = secretCode[4] - secretCode[2];
+    text.textContent = "The difference between the fifth and third number is " + difference;
+    hintContainer.appendChild(text);
+}
+
+//Hint 17
+function diffPos3Pos5() {
+    let text = document.createElement("li");
+    let difference = secretCode[5] - secretCode[3];
+    text.textContent = "The difference between the sixth and fourth number is " + difference;
+    hintContainer.appendChild(text);
+}
+
+//Hint 18
+function diffPos4Pos6() {
+    let text = document.createElement("li");
+    let difference = secretCode[6] - secretCode[4];
+    text.textContent = "The difference between the seventh and fifth number is " + difference;
     hintContainer.appendChild(text);
 }

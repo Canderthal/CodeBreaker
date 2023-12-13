@@ -7,23 +7,26 @@
     <link rel="stylesheet" href="styles.css">
     <title>CodeBreaker</title>
 </head>
-<body onload="TEST()">
+<body onload="startGame()">
 
 
 
 <div class="container mt-5">
     <!--<h4>Testing Code: <span id="SecretCode"></span></h4>-->
     <div class="row ">
-        <div class="col-sm-12 col-md-6 mainWindow">
+        <div class="col-sm-12 col-md-12 col-xl-6 mainWindow">
             <div class="row titleBar ">
-                <div class="col-7 d-flex align-items-center">
+                <div class="col d-flex align-items-center">
                     <p>Code Breaker</p>
                 </div>
-                <div class="col">
+                <div class="col col-md-4">
                     <p>Score: <span id="score">0</span></p>
                 </div>
+                <div class="col col-md-4">
+                    <button class="headerButton" onclick="openHowToPlay()">How To play</button>
+                </div>
                 <div class="col d-flex justify-content-end">
-                    <button id="resetButton" onclick="resetGame()">Reset</button>
+                    <button id="resetButton" class="headerButton"  onclick="resetGame()">Reset</button>
                 </div>
             </div>
 
@@ -77,6 +80,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                     <select  id="input1">
                         <option>0</option>
@@ -92,6 +96,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
 
                     <select  id="input2">
@@ -108,6 +113,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                     <select  id="input3">
                         <option>0</option>
@@ -123,6 +129,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                     <select  id="input4">
                         <option>0</option>
@@ -138,6 +145,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                     <select  id="input5">
                         <option>0</option>
@@ -153,6 +161,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                     <select  id="input6">
                         <option>0</option>
@@ -168,6 +177,7 @@
                         <option>10</option>
                         <option>11</option>
                         <option>12</option>
+
                     </select>
                 </div>
             </div>
@@ -282,7 +292,7 @@
 
         <!-- Hint Container -->
 
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-12 col-md-12 col-xl-6">
                 <!--Previously Given Hint Container-->
                 <div class="container previousHintContainer">
                     <div class="row">
@@ -304,6 +314,13 @@
     </div>
 </div>
 <h3><a href="https://docs.google.com/forms/d/e/1FAIpQLSfPjb9hv1pGmj4bXbfe29gjwGN64zpdI5buaV7gglCIjPYsEw/viewform?usp=sf_link" target="_blank">Feedback</a></h3>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="row">
+        <div class="col">
+            <button class="headerButton" onclick="openRoadmap()">RoadMap</button>
+        </div>
+    </div>
+</div>
 
 
 <!-- Button trigger modal -->
@@ -311,10 +328,55 @@
   
   <!-- Modal -->
   <div class="modal fade testBG" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content testBG" id="testBG" style="background-color: black; border: 1px solid gray;"> <!--Added Inline stlye. Wasnt able to overwrite bootstrap colors-->
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-dialog modal-dialog-centered testBG" id="testBG" style="background-color: black; border: 1px solid gray;"> <!--Added Inline stlye. Wasnt able to overwrite bootstrap colors-->
         <div class="modal-body testBG"  >
           <h4 id="granted">Access Granted</h4>
+          <p id="secretCodeCard"></p>
+        </div>
+        <div class="modal-footer testBG" style="border: none;">
+          <button type="button" data-bs-dismiss="modal">Quit</button>
+          <button type="button" data-bs-dismiss="modal" onclick="nextTarget()" id="gameButton">Next Target</button>
+        </div>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="background-color: black; border: 1px solid gray;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">How To Play</h5>
+        </div>
+        <div class="modal-body">
+          <p>The goal is figure out the secret code.</p>
+          <p>Numbers are sorted from lowest to highest.</p>
+          <p>Lowest number is 0 and the highest being 12 with no duplicate numbers.</p>
+          <p>If you passcode is rejected three times, the game will reset.</p>
+          <p>If you are successful, you will gain 1 point.</p>
+          <p>When you attempt to hack, depending on the number of correct numbers. The bar will light up either green or red depending on the amount you have correct. Not their positions. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade testBG" id="roadMap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-dialog modal-dialog-centered testBG" id="testBG" style="background-color: black; border: 1px solid gray;"> <!--Added Inline stlye. Wasnt able to overwrite bootstrap colors-->
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Planned Features</h5>
+          </div>
+        <div class="modal-body testBG"  >
+          <ul>
+            <li>Level System</li>
+            <li>Main Menu</li>
+            <li>Sound Effects</li>
+            <li>Scoreboard to store highscores</li>
+            <li>Difficulty Scalling</li>
+            <li>Change Target Address for each level</li>
+          </ul>
         </div>
         <div class="modal-footer testBG" style="border: none;">
           <button type="button" data-bs-dismiss="modal">Quit</button>
